@@ -10,28 +10,27 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_02_25_231217) do
+ActiveRecord::Schema.define(version: 2021_03_02_201557) do
 
   create_table "events", force: :cascade do |t|
-    t.integer "creator_id", null: false
     t.string "title", limit: 7, null: false
     t.text "description", null: false
     t.string "location", null: false
-    t.datetime "start_date", null: false
-    t.datetime "end_date", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["creator_id"], name: "index_events_on_creator_id"
+    t.integer "creator_id"
+    t.date "start_date"
+    t.date "end_date"
+    t.time "start_time"
+    t.time "end_time"
   end
 
   create_table "invitations", force: :cascade do |t|
-    t.integer "attendee_id", null: false
-    t.integer "event_id", null: false
     t.integer "status", default: 1
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["attendee_id"], name: "index_invitations_on_attendee_id"
-    t.index ["event_id"], name: "index_invitations_on_event_id"
+    t.integer "event_id"
+    t.integer "attendee_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -47,7 +46,4 @@ ActiveRecord::Schema.define(version: 2021_02_25_231217) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
-  add_foreign_key "events", "creators"
-  add_foreign_key "invitations", "attendees"
-  add_foreign_key "invitations", "events"
 end

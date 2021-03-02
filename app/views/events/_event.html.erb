@@ -1,0 +1,18 @@
+<div>
+  <div>
+    <h3>
+      <%= event.title %>
+    </h3>
+    <div class = "block">
+      <p>
+      <span>
+        <i></i>
+      </span>
+      <%= event.start_date.strftime("%b %-d, %Y") %>
+      </p>
+    </div>
+    <div class="buttons">
+      <%= link_to 'Event Details', event_path(id: event.id) %>
+    </div>
+  </div>
+</div>
