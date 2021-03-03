@@ -3,5 +3,5 @@ class Event < ApplicationRecord
   has_many :invitations, dependent: :destroy
   has_many :attendees, through: :invitations, source: :attendee
 
-  validates :title, :description, :location, :start_date, :end_date, presence: true
+  validates :title, :description, :location, :start_date, :end_date, :start_time, :end_time, presence: true
 end

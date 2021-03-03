@@ -1,0 +1,20 @@
+<% if user_signed_in? %>
+  <%= link_to 'Edit your Info', edit_user_registration_path, class: "button is-helper" %>
+  <%= link_to 'Sign Out', destroy_user_session_path, method: :delete, class: "button is-helper" %>
+<% else%>
+  <%= link_to 'Sign Up', new_user_registration_path, class: "button is-helper" %>
+  <%= link_to 'Sign In', new_user_session_path, class:  "button is-helper" %>
+<% end %>
+<h1> All Events </h1>
+<%= link_to 'New Event', new_event_path if user_signed_in? %>
+ <% @events.each do |event| %>
+   <div class="border">
+     <p>
+     <%= event.title %>
+     on
+     <%= event.start_date.strftime("%b %-d, %Y")%>
+     <%= event.start_time.strftime(" at %l:%M %P")%>
+     <%= link_to 'Event Info', event_path(event.id) %>
+     </p>
+   </div>
+ <% end %>

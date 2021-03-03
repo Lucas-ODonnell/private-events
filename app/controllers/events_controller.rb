@@ -1,10 +1,11 @@
 class EventsController < ApplicationController
+  before_action :authenticate_user!, only: [:new, :create, :show]
   def index
-    @events = Event.all.order("create_at DESC") 
+    @events = Event.all.order("created_at DESC") 
   end
 
   def show
-    @event = Event.find_by(params: "id")
+    @event = Event.find_by(id: params[:id])
   end
 
   def new
@@ -12,9 +13,9 @@ class EventsController < ApplicationController
   end
 
   def create
-    @event = current_user.events.build(event_params)
+    @event = current_user.created_events.build(event_params)
     if @event.save
-      redirect_to root_path
+      redirect_to @event 
     else
       render :new
     end
@@ -27,7 +28,7 @@ class EventsController < ApplicationController
   def update
     @event = Event.find(params[:id])
     if @event.update(event_params)
-      redirect_to root_path
+      redirect_to @event 
     else
       render :edit
     end
@@ -42,7 +43,14 @@ class EventsController < ApplicationController
   private
 
   def event_params
-    params.require(:event).permit(:title, :description, :location, :start_date, :end_date)
+    params.require(:event).permit(:creator_id,
+                                  :title, 
+                                  :description, 
+                                  :location, 
+                                  :start_date, 
+                                  :end_date, 
+                                  :start_time, 
+                                  :end_time)
   end
 
 end
