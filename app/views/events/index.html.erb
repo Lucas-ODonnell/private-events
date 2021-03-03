@@ -6,7 +6,7 @@
   <%= link_to 'Sign In', new_user_session_path, class:  "button is-helper" %>
 <% end %>
 <h1> All Events </h1>
-<%= link_to 'New Event', new_event_path if user_signed_in? %>
+<p class = "button is-info"><%= link_to 'New Event', new_event_path if user_signed_in?%></p>
  <% @events.each do |event| %>
    <div class="border">
      <p>
@@ -14,7 +14,7 @@
      on
      <%= event.start_date.strftime("%b %-d, %Y")%>
      <%= event.start_time.strftime(" at %l:%M %P")%>
-     <%= link_to 'Event Info', event_path(event.id) %>
+     <%= link_to 'Event Info', event_path(event.id), class: "button is-show" %>
      </p>
    </div>
  <% end %>
