@@ -1,0 +1,79 @@
+<h2>My Invitations</h2>
+<% if @invitations.empty? %>
+  <p>No Upcoming Events<p>
+<% else %>
+  <%= form_tag update_all_invitations_path, method: :put do %>
+    <% @invitations.each do |invitation| %>
+      <div>
+        <div class="border">
+          <div>
+            <h3>
+              <%= link_to invitation.event.title, event_path(id: invitation.event.id) %>
+            </h3>
+            <h3>
+              Host:
+              <%= invitation.event.creator.name %>
+            </h3>
+            <div>
+              <% if !invitation.event.description.blank? %>
+                <p>
+                <i></i>
+                <%= invitation.event.description %>
+                </p>
+              <% end %>
+              <p>
+              <i></i>
+              <%= invitation.event.location %>
+              </p>
+              <p>
+              <i></i>
+              <%= invitation.event.start_date.strftime("%b %-d, %Y")%>
+              <%= invitation.event.start_time.strftime(" at %l:%M %P")%> -
+              <% if (invitation.event.start_date - invitation.event.end_date).to_i == 0 %>
+                <%= invitation.event.end_time.strftime("%l:%M %P") %>
+              <% else %>
+                <%= invitation.event.end_date.strftime("%b %-d, %Y")%>
+                <%= invitation.event.end_time.strftime(" at %l:%M %P")%>
+              <% end %>
+              </p>
+            </div>
+            <%= fields_for "invitations[]", invitation do |f| %>
+              <% if invitation.errors.any? %>
+                <div>
+                  <h2><%= pluralize(invitation.errors.count, "error") %> prohibited this invitation from being saved:
+                  </h2>
+                  <ul>
+                    <% invitation.errors.full_messages.each do |msg| %>
+                      <li><%= msg %></li>
+                    <% end %>
+                  </ul>
+                </div>
+              <% end %>
+              <div>
+                <div>
+                  <p>
+                  <strong>Current RSVP Status</strong> (use dropdown to change & click on save)
+                  </p>
+                  <div>
+                    <%= f.select :status, @status_options %>
+                  </div>
+                </div>
+              </div>
+            <% end %>
+            <br />
+            <div>
+              <%= submit_tag "Save Change", class:"button is-show" %>
+            </div>
+          </div>
+        </div>
+      </div>
+    <% end %>
+    <br />
+    <div>
+      <%= submit_tag "Save All Changes", class:"button is-info " %>
+    </div>
+    <div>
+      <%= link_to "All Events", root_path, class: "button is-dangerous" %>
+    </div>
+  <% end %>
+<% end %>

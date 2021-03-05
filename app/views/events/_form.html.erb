@@ -1,8 +1,8 @@
 <%= form_with model: @event, local: true do |f| %>
- <% if @event.errors.any? %>
+  <% if @event.errors.any? %>
     <div id="error_explanation">
-      <h2 class="has-text-danger"><%= pluralize(@event.errors.count, "error") %> prohibited this event from being saved:</h2>
-
+      <h2 class="has-text-danger"><%= pluralize(@event.errors.count, "error") %> prohibited this event from being saved:
+      </h2>
       <ul class="has-text-danger">
         <% @event.errors.each do |error| %>
           <li>
@@ -15,7 +15,6 @@
       </ul>
     </div>
   <% end %>
-  
   <div class="field">
     <%= f.label :title %><br />
     <%= f.text_field :title, require: true %>
@@ -49,6 +48,17 @@
    <div class="field">
     <%= f.label "End Time" %><br />
     <%= f.time_field :end_time, require: true, placeholder: "24:00", class: "input" %>
+  </div>
+  <div class="field invite-names">
+    <p><strong>Invitation Options:</strong></p>
+    <%= f.fields_for :invitations do |invite_form| %>
+      <%= invite_form.collection_check_boxes :attendee_id, @attendee_options, :id, :name, { checked: @attendees } do |option| %>
+        <p class="invite-names">
+          <%= option.check_box %>
+          <%= option.label %>
+        </p>
+      <% end %>
+    <% end %>
   </div>
 
   <div class="actions">

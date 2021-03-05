@@ -13,6 +13,16 @@
  *= require_tree .
  *= require_self
  */
+.column { 
+	float: left;
+	width: 50%;
+}
+
+.row.after {
+	content: "";
+	display: table;
+	clear:both;
+}
 .border {
 	border-style: double
 }
