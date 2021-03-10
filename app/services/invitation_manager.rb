@@ -5,11 +5,14 @@ class InvitationManager
   end
 
   def create_invitations
+    #This relates to the event_controller
+    #InvitationManager.new(@event, invitation_params).create_invitations
+    attendees = @event.attendees
     @attendee_ids.each do |id|
-      if @event.attendees.ids.include?(id.to_i)
+      if attendees.ids.include?(id.to_i)
         next
       else
-        @event.invitations.create(attendee_id: id)
+        Invitation.create(attendee_id: id, event_id: @event.id)
       end
     end
   end

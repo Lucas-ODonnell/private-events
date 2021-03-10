@@ -11,12 +11,13 @@ class EventsController < ApplicationController
 
   def new
     @event = Event.new
-    @event.invitations.build
+    @event.invitations.build #<Invitation id: , status: , created_at:, updated_at: , event_id: attendee_id : >
     @attendee_options = possible_attendees
   end
 
   def create
-    @event = current_user.created_events.build(event_params)
+    @event = Event.new(event_params)
+    @event.creator_id = current_user.id
     @invitation = Invitation.new
     if @event.save
       InvitationManager.new(@event, invitation_params).create_invitations
@@ -62,6 +63,7 @@ class EventsController < ApplicationController
                                   :end_date, 
                                   :start_time, 
                                   :end_time)
+
   end
 
   def invitation_params

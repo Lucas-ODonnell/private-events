@@ -5,6 +5,6 @@ class Invitation < ApplicationRecord
   enum status: {
     no_response: 1,
     accepted: 2,
-    not_coming: 3
+    rejected: 3
   }
 end
